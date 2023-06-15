@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meu Mapa do Mapbox</title>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+  <script>
+    mapboxgl.accessToken = 'SEU_MAPBOX_ACCESS_TOKEN';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/brandao86/clixbxgxw02ef01qpg3an1iaz',
+      center: [-36.5748442, -9.6611663],
+      zoom: 9
+    });
+
+    map.on('load', function () {
+      map.addSource('camada1', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/brandao86/mabx/main/map.geojson'
+      });
+
+      map.addLayer({
+        id: 'camada1',
+        type: 'line',
+        source: 'camada1',
+        paint: {
+          'line-color': '#ff0000',
+          'line-width': 2
+        }
+      });
+
+      map.addSource('camada2', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/brandao86/mabx/main/grotas100.geojson'
+      });
+
+      map.addLayer({
+        id: 'camada2',
+        type: 'fill',
+        source: 'camada2',
+        paint: {
+          'fill-color': '#00ff00',
+          'fill-opacity': 0.5
+        }
+      });
+    });
+  </script>
+</body>
+</html>
